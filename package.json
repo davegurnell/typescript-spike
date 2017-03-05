@@ -1,0 +1,41 @@
+{
+  "name": "cartographer-ts",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "main": "src/index.tsx",
+  "engines": {
+    "node": ">=7.0.0"
+  },
+  "scripts": {
+    "setup": "yarn",
+    "start": "http-server",
+    "build": "node node_modules/webpack/bin/webpack.js",
+    "watch": "node node_modules/webpack/bin/webpack.js --watch",
+    "lint": "node_modules/tslint/bin/tslint -c tslint.json 'src/**/*.{ts,tsx}'"
+  },
+  "dependencies": {
+    "@types/react": "^15.0.14",
+    "@types/react-dom": "^0.14.23",
+    "@types/react-redux": "^4.4.36",
+    "@types/redux": "^3.6.0",
+    "@types/redux-logger": "^2.6.34",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-redux": "4.4.6",
+    "redux": "3.6.0",
+    "redux-logger": "^2.8.2",
+    "redux-thunk": "^2.2.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.3.2",
+    "babel-preset-es2015": "^6.22.0",
+    "http-server": "^0.9.0",
+    "ts-loader": "^2.0.1",
+    "tslint": "^4.5.1",
+    "typescript": "^2.2.1",
+    "webpack": "^1.13.1",
+    "webpack-fail-plugin": "^1.0.6"
+  }
+}
