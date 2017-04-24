@@ -1,3 +1,5 @@
+import { defaultHeaders } from './core'
+
 export type Method =
   "GET" |
   "POST" |
@@ -58,46 +60,42 @@ export type RequestOptions<A> =
   OptionsRequestOptions
 
 export function get<A>(url: string): Promise<A> {
-  return request<any, A>({ method: "GET", url })
+  return request<any, A>({ method: "GET", url, headers: defaultHeaders })
 }
 
 export function post<A, B>(url: string, body: A): Promise<B> {
-  return request<A, B>({ method: "POST", url, body })
+  return request<A, B>({ method: "POST", url, body, headers: defaultHeaders })
 }
 
 export function put<A, B>(url: string, body: A): Promise<B> {
-  return request<A, B>({ method: "PUT", url, body })
+  return request<A, B>({ method: "PUT", url, body, headers: defaultHeaders })
 }
 
 export function del<A>(url: string): Promise<A> {
-  return request<any, A>({ method: "DELETE", url })
+  return request<any, A>({ method: "DELETE", url, headers: defaultHeaders })
 }
 
 export function head<A>(url: string): Promise<A> {
-  return request<any, A>({ method: "HEAD", url })
+  return request<any, A>({ method: "HEAD", url, headers: defaultHeaders })
 }
 
 export function options<A>(url: string): Promise<A> {
   return request<any, A>({ method: "OPTIONS", url })
 }
 
-export const defaultHeaders = {
-  'Content-Type': 'application/json'
-}
-
 export function request<A, B>(options: RequestOptions<A>): Promise<B> {
   const { method, url, headers } = options
   switch(options.method) {
     case 'POST':
-    const body = JSON.stringify(options.body, null, 0)
+    case 'PUT':
+      const body = JSON.stringify(options.body, null, 0)
       return fetch(url, { method, headers, body })
         .then(
           response => response.json().then((json: any) => Promise.resolve(json as B)),
           response => response.json().then((json: any) => Promise.reject(json))
         )
-    case 'PUT':
     default:
       return fetch(url, { method, headers })
-        .then(response => null)
+        .then(response => null as any)
   }
 }

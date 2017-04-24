@@ -1,4 +1,6 @@
-import { LoginAction } from '../actions/login'
+import * as redux from 'react-redux'
+import { replace } from 'react-router-redux'
+import { Action } from '../actions'
 
 export type LoginState = {
   email: string,
@@ -16,18 +18,14 @@ const initialLoginState: LoginState = {
   error: null,
 }
 
-export const loginReducer = (state: LoginState = initialLoginState, action: LoginAction): LoginState => {
+export const loginReducer = (state: LoginState = initialLoginState, action: Action): LoginState => {
   switch (action.type) {
     case 'EmailChangeAction':
       return Object.assign({}, state, { email: action.value })
     case 'PasswordChangeAction':
       return Object.assign({}, state, { password: action.value })
-    case 'LoginStartedAction':
-      return Object.assign({}, state, { loading: true, error: null })
     case 'LoginCompleteAction':
-      return Object.assign({}, state, { loading: false, token: action.response.token, error: null })
-    case 'LoginFailedAction':
-      return Object.assign({}, state, { loading: false, token: null, error: action.error })
+      return Object.assign({}, state, { password: '' })
     default:
       return state
   }

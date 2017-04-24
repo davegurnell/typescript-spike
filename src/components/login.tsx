@@ -1,27 +1,26 @@
 import * as React from 'react'
 import * as redux from 'redux'
 import { connect } from 'react-redux'
+import { emailChange, passwordChange } from '../actions/login'
+import { submitLoginAsync } from '../actions/auth'
+import { GlobalState } from '../reducers'
+import { AuthState } from '../reducers/auth'
+import { LoginState } from '../reducers/login'
 
 import {
-  emailChange,
-  passwordChange,
-  submitLoginAsync
-} from '../actions/login'
-
-import {
-  GlobalState
-} from '../reducers'
-
-import {
-  LoginState
-} from '../reducers/login'
+  FormGroup,
+  ControlLabel,
+  FormControl,
+  Button,
+} from 'react-bootstrap'
 
 type OwnProps = {
 
 }
 
 type ConnectedState = {
-  state: LoginState
+  login: LoginState,
+  auth: AuthState
 }
 
 type ConnectedDispatch = {
@@ -37,7 +36,8 @@ type OwnState = {
 }
 
 const mapStateToProps = (state: GlobalState, props: OwnProps): ConnectedState => ({
-  state: state.login
+  login: state.login,
+  auth: state.auth,
 })
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<GlobalState>): ConnectedDispatch => ({
@@ -56,16 +56,37 @@ class LoginForm extends React.Component<ConnectedState & ConnectedDispatch & Own
     this.props.dispatch.passwordChange(evt.target.value)
 
   _onSubmitClick = (evt: any) => {
-    this.props.dispatch.submitLogin(this.props.state.email, this.props.state.password)
+    this.props.dispatch.submitLogin(this.props.login.email, this.props.login.password)
   }
 
   render () {
-    return <div>
-      <p><input type="text" value={this.props.state.email} onChange={this._onEmailChange} /></p>
-      <p><input type="password" value={this.props.state.password} onChange={this._onPasswordChange} /></p>
-      <p><button onClick={this._onSubmitClick}>Go!</button></p>
-      <pre>{JSON.stringify(this.props.state, null, 2)}</pre>
-    </div>
+    return (
+      <div>
+        <h1>Login</h1>
+        <FormGroup>
+          <ControlLabel>Email</ControlLabel>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="leonardo@davinci.com"
+            value={this.props.login.email}
+            onChange={this._onEmailChange} />
+        </FormGroup>
+        <FormGroup>
+          <ControlLabel>Password</ControlLabel>
+          <input
+            type="password"
+            className="form-control"
+            value={this.props.login.password}
+            onChange={this._onPasswordChange} />
+        </FormGroup>
+        <p>
+          <Button bsStyle="primary" onClick={this._onSubmitClick}>
+            Go!
+          </Button>
+        </p>
+      </div>
+    )
   }
 }
 

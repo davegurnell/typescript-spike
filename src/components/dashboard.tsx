@@ -1,10 +1,7 @@
 import * as React from 'react'
 import * as redux from 'redux'
 import { connect } from 'react-redux'
-
-import {
-  GlobalState
-} from '../reducers'
+import { GlobalState } from '../reducers'
 
 // import {
 //   DashboardState
@@ -15,7 +12,7 @@ type OwnProps = {
 }
 
 type ConnectedState = {
-  // state: DashboardState
+  global: GlobalState
 }
 
 type ConnectedDispatch = {
@@ -29,7 +26,7 @@ type OwnState = {
 }
 
 const mapStateToProps = (state: GlobalState, props: OwnProps): ConnectedState => ({
-  // state: state.login
+  global: state
 })
 
 const mapDispatchToProps = (dispatch: redux.Dispatch<GlobalState>): ConnectedDispatch => ({
@@ -40,9 +37,12 @@ const mapDispatchToProps = (dispatch: redux.Dispatch<GlobalState>): ConnectedDis
 
 class Dashboard extends React.Component<ConnectedState & ConnectedDispatch & OwnProps, OwnState> {
   render () {
-    return <div>
-      <h1>Dashboard</h1>
-    </div>
+    return (
+      <div>
+        <h1>Dashboard</h1>
+        <pre>{JSON.stringify(this.props.global, null, 2)}</pre>
+      </div>
+    )
   }
 }
 
